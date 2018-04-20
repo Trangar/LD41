@@ -1,0 +1,18 @@
+[package]
+name = "april2018"
+version = "0.1.0"
+authors = ["Victor Koenders <victor.koenders@gmail.com>"]
+build = "build.rs"
+
+[dependencies]
+time = "*"
+rand = "*"
+cgmath = "*"
+collision = "*"
+trait_enum = "*"
+error-chain = "*"
+
+[dependencies.sdl2]
+version = "*"
+default-features = false
+features = ["ttf", "image", "mixer", "gfx", "static-link"]
