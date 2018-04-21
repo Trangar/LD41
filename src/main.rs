@@ -15,22 +15,30 @@ extern crate time;
 #[macro_use]
 extern crate error_chain;
 
+mod assets;
+mod cookie;
 mod error;
+mod state;
+mod turret;
+mod textcache;
 
 use error::{Error, Result, ResultExt};
 use sdl2::event::Event;
 use sdl2::keyboard::Keycode;
-use std::time::Duration;
-
-const FRAME_INTERVAL: u64 = 1_000_000_000 / 60;
+use sdl2::pixels::Color;
 
 fn run() -> Result<()> {
     let sdl_context = sdl2::init()
-        .map_err(|e| Error::from(e))
+        .map_err(Error::from)
         .chain_err(|| "Could not init SDL2")?;
+    let _image_context = sdl2::image::init(sdl2::image::INIT_PNG)
+        .map_err(Error::from)
+        .chain_err(|| "Could not init sdl2 image")?;
+    let ttf_context = sdl2::ttf::init().chain_err(|| "Could not init TTF")?;
+
     let video_subsystem = sdl_context
         .video()
-        .map_err(|e| Error::from(e))
+        .map_err(Error::from)
         .chain_err(|| "Could not init SDL video subsystem")?;
     let window = video_subsystem
         .window("SDL Game", 800, 600)
@@ -44,19 +52,21 @@ fn run() -> Result<()> {
         .chain_err(|| "Could not create window canvas")?;
     let mut event_pump = sdl_context
         .event_pump()
-        .map_err(|e| Error::from(e))
+        .map_err(Error::from)
         .chain_err(|| "Could not create SDL event pump")?;
-    let ttf_context = sdl2::ttf::init().chain_err(|| "Could not init TTF")?;
 
     let texture_creator = canvas.texture_creator();
-    let mut rand = rand::thread_rng();
-    let mut i = 0;
-    let mut frame = 0;
-    let mut last_frame_time = time::precise_time_s();
+    let assets = assets::Assets::new(&texture_creator)
+        .chain_err(|| "Could not load assets")?;
+
+    let _rand = rand::thread_rng();
+    let mut fps_manager = sdl2::gfx::framerate::FPSManager::new();
+    fps_manager.set_framerate(60).map_err(Error::from).chain_err(|| "Could not set framerate")?;
+    let mut state = state::GameState::default();
+    let mut textcache = textcache::TextCache::new(&ttf_context, "assets/arial.ttf", 18)
+        .chain_err(|| "Could not create a text cache")?;
 
     'running: loop {
-        let target = FRAME_INTERVAL + time::precise_time_ns();
-
         for event in event_pump.poll_iter() {
             match event {
                 Event::Quit { .. }
@@ -64,24 +74,21 @@ fn run() -> Result<()> {
                     keycode: Some(Keycode::Escape),
                     ..
                 } => break 'running,
+                Event::MouseButtonDown { x, y, .. } => state.click((x, y)),
                 _ => {}
             }
         }
-        last_frame_time = time::precise_time_s();
-        i += 1;
-        let end = time::precise_time_ns();
-        frame += 1;
-        if end < target {
-            std::thread::sleep(Duration::from_millis((target - end) / 1_000_000));
+        state.update();
+
+        {
+            canvas.set_draw_color(Color::RGB(0, 0, 0));
+            canvas.clear();
+            state.render(&mut canvas, &assets, &mut textcache)
+                .chain_err(||"Could not render state")?;
+            canvas.present();
         }
-        if last_frame_time + 1f64 < time::precise_time_s() {
-            last_frame_time = time::precise_time_s();
-            canvas
-                .window_mut()
-                .set_title(&format!("FPS: {}", frame))
-                .chain_err(|| "Could not update window title")?;
-            frame = 0;
-        }
+
+        fps_manager.delay();
     }
     Ok(())
 }
