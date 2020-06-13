@@ -1,19 +1,3 @@
-#![cfg_attr(
-    feature = "cargo-clippy",
-    warn(
-        decimal_literal_representation,
-        enum_glob_use,
-        fallible_impl_from,
-        if_not_else,
-        match_same_arms,
-        mut_mut,
-        needless_borrow,
-        option_unwrap_used,
-        range_plus_one,
-        result_unwrap_used
-    )
-)]
-
 extern crate cgmath;
 extern crate collision;
 extern crate rand;
