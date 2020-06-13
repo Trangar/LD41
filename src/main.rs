@@ -1,8 +1,15 @@
 #![cfg_attr(
     feature = "cargo-clippy",
     warn(
-        decimal_literal_representation, enum_glob_use, fallible_impl_from, if_not_else,
-        match_same_arms, mut_mut, needless_borrow, option_unwrap_used, range_plus_one,
+        decimal_literal_representation,
+        enum_glob_use,
+        fallible_impl_from,
+        if_not_else,
+        match_same_arms,
+        mut_mut,
+        needless_borrow,
+        option_unwrap_used,
+        range_plus_one,
         result_unwrap_used
     )
 )]
@@ -11,7 +18,6 @@ extern crate cgmath;
 extern crate collision;
 extern crate rand;
 extern crate sdl2;
-extern crate time;
 #[macro_use]
 extern crate error_chain;
 
@@ -19,8 +25,8 @@ mod assets;
 mod cookie;
 mod error;
 mod state;
-mod turret;
 mod textcache;
+mod turret;
 
 use error::{Error, Result, ResultExt};
 use sdl2::event::Event;
@@ -31,7 +37,7 @@ fn run() -> Result<()> {
     let sdl_context = sdl2::init()
         .map_err(Error::from)
         .chain_err(|| "Could not init SDL2")?;
-    let _image_context = sdl2::image::init(sdl2::image::INIT_PNG)
+    let _image_context = sdl2::image::init(sdl2::image::InitFlag::PNG)
         .map_err(Error::from)
         .chain_err(|| "Could not init sdl2 image")?;
     let ttf_context = sdl2::ttf::init().chain_err(|| "Could not init TTF")?;
@@ -56,12 +62,14 @@ fn run() -> Result<()> {
         .chain_err(|| "Could not create SDL event pump")?;
 
     let texture_creator = canvas.texture_creator();
-    let assets = assets::Assets::new(&texture_creator)
-        .chain_err(|| "Could not load assets")?;
+    let assets = assets::Assets::new(&texture_creator).chain_err(|| "Could not load assets")?;
 
     let _rand = rand::thread_rng();
     let mut fps_manager = sdl2::gfx::framerate::FPSManager::new();
-    fps_manager.set_framerate(60).map_err(Error::from).chain_err(|| "Could not set framerate")?;
+    fps_manager
+        .set_framerate(60)
+        .map_err(Error::from)
+        .chain_err(|| "Could not set framerate")?;
     let mut state = state::GameState::default();
     let mut textcache = textcache::TextCache::new(&ttf_context, "assets/arial.ttf", 18)
         .chain_err(|| "Could not create a text cache")?;
@@ -83,8 +91,9 @@ fn run() -> Result<()> {
         {
             canvas.set_draw_color(Color::RGB(0, 0, 0));
             canvas.clear();
-            state.render(&mut canvas, &assets, &mut textcache)
-                .chain_err(||"Could not render state")?;
+            state
+                .render(&mut canvas, &assets, &mut textcache)
+                .chain_err(|| "Could not render state")?;
             canvas.present();
         }
 
@@ -98,11 +107,6 @@ fn main() {
     if let Err(e) = run() {
         for item in e.iter() {
             println!("{}", item);
-            if let Some(cause) = item.cause() {
-                if cause.description() != item.description() {
-                    println!("  caused by: {}", cause);
-                }
-            }
         }
 
         if let Some(backtrace) = e.backtrace() {
