@@ -15,6 +15,9 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
+      
+      - name: Install SDL
+        run: sudo apt install -y libsdl2-dev libsdl2-mixer-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-gfx-dev
 
       - name: Install stable toolchain
         uses: actions-rs/toolchain@v1
@@ -34,6 +37,9 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
+      
+      - name: Install SDL
+        run: sudo apt install -y libsdl2-dev libsdl2-mixer-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-gfx-dev
 
       - name: Install stable toolchain
         uses: actions-rs/toolchain@v1
@@ -53,6 +59,9 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
+      
+      - name: Install SDL
+        run: sudo apt install -y libsdl2-dev libsdl2-mixer-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-gfx-dev
 
       - name: Install stable toolchain
         uses: actions-rs/toolchain@v1
