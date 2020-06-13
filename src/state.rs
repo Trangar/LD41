@@ -93,7 +93,8 @@ impl GameState {
             0,
             (400f64 * self.cookie_size) as u32,
             (400f64 * self.cookie_size) as u32,
-        ).into();
+        )
+            .into();
         rect.center_on((200, 300));
 
         canvas.copy_ex(
@@ -106,17 +107,24 @@ impl GameState {
             false,
         )?;
 
-        canvas.set_draw_color(if self.autoclicker_price() <= self.currency {Color::RGB(255, 255, 255) } else { Color::RGB(125, 125, 125) });
+        canvas.set_draw_color(if self.autoclicker_price() <= self.currency {
+            Color::RGB(255, 255, 255)
+        } else {
+            Color::RGB(125, 125, 125)
+        });
         canvas.fill_rect(Some((100, 500, 200, 50).into()))?;
         {
             let build_autoclicker_text = textcache
-                .get(&format!("Build autoclicker ({})", self.autoclicker_price()), Color::RGB(0, 0, 0))
+                .get(
+                    &format!("Build autoclicker ({})", self.autoclicker_price()),
+                    Color::RGB(0, 0, 0),
+                )
                 .chain_err(|| "Could not render build_autoclicker text")?;
             canvas
                 .draw_centered(&build_autoclicker_text, (200, 525))
                 .chain_err(|| "Could not draw build_autoclicker text")?;
         }
-       
+
         Ok(())
     }
 }

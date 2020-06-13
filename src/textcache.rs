@@ -25,7 +25,8 @@ impl<'a, 'b, 'c> TextCache<'a, 'b, 'c> {
 
     pub fn get(&mut self, text: &str, color: Color) -> Result<&Surface<'a>> {
         let font = &mut self.font;
-        let entry = self.cache
+        let entry = self
+            .cache
             .entry((text.to_owned(), color))
             .or_insert_with(|| {
                 (
@@ -39,6 +40,7 @@ impl<'a, 'b, 'c> TextCache<'a, 'b, 'c> {
         Ok(&entry.0)
     }
 
+    /*
     pub fn cleanup(&mut self) {
         let mut keys_to_remove = Vec::new();
         for (key, mut value) in &mut self.cache {
@@ -51,5 +53,5 @@ impl<'a, 'b, 'c> TextCache<'a, 'b, 'c> {
         for key in keys_to_remove {
             self.cache.remove(&key);
         }
-    }
+    }*/
 }

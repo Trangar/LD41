@@ -5,14 +5,16 @@ authors = ["Victor Koenders <victor.koenders@gmail.com>"]
 build = "build.rs"
 
 [dependencies]
-time = "*"
-rand = "*"
-cgmath = "*"
-collision = "*"
-trait_enum = "*"
-error-chain = "*"
+rand = "0.7"
+cgmath = "0.17"
+collision = "0.20"
+trait_enum = "0.3"
+error-chain = "0.12"
 
 [dependencies.sdl2]
-version = "*"
+version = "0.34"
 default-features = false
-features = ["ttf", "image", "mixer", "gfx", "static-link"]
+features = ["ttf", "image", "mixer", "gfx"]
+
+[profile.release]
+lto = true
