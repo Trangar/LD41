@@ -14,7 +14,7 @@ version = "0.1.0"
 dependencies = [
  "cgmath 0.17.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "collision 0.20.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "error-chain 0.12.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "error-chain 0.12.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "rand 0.7.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "sdl2 0.34.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "trait_enum 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -118,7 +118,7 @@ dependencies = [
 
 [[package]]
 name = "error-chain"
-version = "0.12.3"
+version = "0.12.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "backtrace 0.3.6 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -512,7 +512,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 "checksum cgmath 0.17.0 (registry+https://github.com/rust-lang/crates.io-index)" = "283944cdecc44bf0b8dd010ec9af888d3b4f142844fdbe026c20ef68148d6fe7"
 "checksum cloudabi 0.0.3 (registry+https://github.com/rust-lang/crates.io-index)" = "ddfc5b9aa5d4507acaf872de71051dfd0e309860e88966e1051e462a077aac4f"
 "checksum collision 0.20.1 (registry+https://github.com/rust-lang/crates.io-index)" = "6107f6be76c2269a9c8d89e707a66122bd3086f987fa508133a5f774e8ac4ced"
-"checksum error-chain 0.12.3 (registry+https://github.com/rust-lang/crates.io-index)" = "be51ed50e75656c17216bdd4326914466db0c91b9b246b12962a00284d06566b"
+"checksum error-chain 0.12.4 (registry+https://github.com/rust-lang/crates.io-index)" = "2d2f06b9cac1506ece98fe3231e3cc9c4410ec3d5b1f24ae1c8946f0742cdefc"
 "checksum fuchsia-cprng 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "a06f77d526c1a601b7c4cdd98f54b5eaabffc14d5f2f0296febdc7f357c6d3ba"
 "checksum getrandom 0.1.14 (registry+https://github.com/rust-lang/crates.io-index)" = "7abc8dd8451921606d809ba32e95b6111925cd2906060d2dcc29c070220503eb"
 "checksum lazy_static 1.4.0 (registry+https://github.com/rust-lang/crates.io-index)" = "e2abad23fbc42b3700f2f279844dc832adb2b2eb069b2df918f455c4e18cc646"
