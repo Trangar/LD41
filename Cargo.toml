@@ -8,7 +8,7 @@ build = "build.rs"
 rand = "0.7"
 cgmath = "0.17"
 collision = "0.20"
-trait_enum = "0.3"
+trait_enum = "0.5"
 error-chain = "0.12"
 
 [dependencies.sdl2]
