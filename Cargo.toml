@@ -5,7 +5,7 @@ authors = ["Victor Koenders <victor.koenders@gmail.com>"]
 build = "build.rs"
 
 [dependencies]
-rand = "0.7"
+rand = "0.8"
 cgmath = "0.17"
 collision = "0.20"
 trait_enum = "0.5"
